@@ -62,21 +62,22 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-permmat = eye(num_labels)(y,:);
+permmat = eye(num_labels)(y,:); % permutaion matrix for y
+
+% begin feed forward
 a1 = [ones(size(X,1),1),X];
 z2 = a1*Theta1';
 a2 = sigmoid(z2);
 a2 = [ones(size(a2,1),1),a2];
 z3 = a2*Theta2';
 a3 = sigmoid(z3);
+% end feed forward
 
-J = 1/m * sum(sum(((-permmat .* log(a3) - (1-permmat) .* log(1 - a3)))'));
-J
+J = 1/m * sum(sum(((-permmat .* log(a3) - (1-permmat) .* log(1 - a3)))')); % cost function
 
+R = lambda/(2*m) * (sum(sum((Theta1(:,2:end).^2)')') + sum(sum((Theta2(:,2:end).^2)')')); % regularization
 
-
-
-
+J = J + R % regularized cost function
 
 
 
